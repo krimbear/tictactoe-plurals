@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A jungle tic-tac-toe game that teaches English plurals.">
+  <title>Jungle Plurals — Tic-Tac-Toe</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='14' width='64' height='64' fill='%231b6b38'/%3E%3Cpath d='M16 16l32 32m0-32L16 48' stroke='%23ff6b2c' stroke-width='9' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="portrait.css">
+</head>
+<body>
+  <main class="game-shell" aria-label="Jungle Plurals tic-tac-toe game">
+    <section class="game-card">
+      <div class="topbar">
+        <div class="logo" aria-label="Jungle Plurals">
+          <span class="logo-small">JUNGLE</span>
+          <span>PLURALS</span>
+        </div>
+        <div class="status-pill" id="turnStatus" aria-live="polite">Ready to play!</div>
+        <button class="sound-button" id="soundToggle" type="button" aria-label="Mute sound" title="Sound on">♪</button>
+      </div>
+
+      <div class="board-wrap" id="boardWrap">
+        <img class="desk" src="desk.png" alt="A stone tic-tac-toe board in a colorful jungle">
+        <div class="board" id="board" aria-label="Tic-tac-toe board">
+          <button class="cell" data-index="0" aria-label="Top left square"></button>
+          <button class="cell" data-index="1" aria-label="Top middle square"></button>
+          <button class="cell" data-index="2" aria-label="Top right square"></button>
+          <button class="cell" data-index="3" aria-label="Middle left square"></button>
+          <button class="cell" data-index="4" aria-label="Center square"></button>
+          <button class="cell" data-index="5" aria-label="Middle right square"></button>
+          <button class="cell" data-index="6" aria-label="Bottom left square"></button>
+          <button class="cell" data-index="7" aria-label="Bottom middle square"></button>
+          <button class="cell" data-index="8" aria-label="Bottom right square"></button>
+        </div>
+
+        <div class="mini-hud" aria-label="Current game statistics">
+          <span>You: <img id="playerIcon" src="cross.png" alt="X"></span>
+          <span>Moves <b id="moveCount">0</b></span>
+          <span>Mistakes <b id="mistakeCount">0</b></span>
+        </div>
+
+        <section class="challenge" id="challenge" aria-modal="true" role="dialog" aria-labelledby="challengeTitle" hidden>
+          <div class="rope rope-left"></div><div class="rope rope-right"></div>
+          <p class="eyebrow">MAKE YOUR MOVE</p>
+          <h2 id="challengeTitle">What is the plural?</h2>
+          <div class="word" id="challengeWord">child</div>
+          <form id="answerForm" novalidate>
+            <label for="answerInput">Write the plural form</label>
+            <input id="answerInput" type="text" inputmode="text" autocomplete="off" spellcheck="false" maxlength="20" placeholder="Type your answer…">
+            <p class="feedback" id="feedback" aria-live="assertive"></p>
+            <button class="jungle-button primary" type="submit">Check</button>
+          </form>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-layer" id="modalLayer">
+    <section class="modal start-modal" id="startModal" role="dialog" aria-modal="true" aria-labelledby="startTitle">
+      <div class="monkey-portrait welcome" aria-hidden="true"></div>
+      <p class="eyebrow">A JUNGLE WORD ADVENTURE</p>
+      <h1 id="startTitle">Let’s play!</h1>
+      <p>Win the jungle board with your English superpowers.</p>
+      <div class="modal-actions">
+        <button class="jungle-button primary" id="playButton" type="button">Play</button>
+        <button class="jungle-button secondary" id="instructionsButton" type="button">Инструкция</button>
+      </div>
+    </section>
+
+    <section class="modal instructions-modal" id="instructionsModal" role="dialog" aria-modal="true" aria-labelledby="instructionsTitle" hidden>
+      <div class="teacher-row">
+        <div class="monkey-portrait teacher" aria-hidden="true"></div>
+        <div><p class="eyebrow">MONKEY’S QUICK GUIDE</p><h2 id="instructionsTitle">How to play</h2></div>
+      </div>
+      <ol>
+        <li>Tap an empty stone square.</li>
+        <li>Write the plural of the word you see.</li>
+        <li>Get it right to place your X or O. Get three in a row to win!</li>
+      </ol>
+      <div class="lesson-cards">
+        <div class="lesson regular"><span>Most words</span><strong>bin + s = bins</strong><small>Just add <b>s</b></small></div>
+        <div class="lesson special"><span>Special words</span><strong>child → children</strong><small>Learn these by heart!</small></div>
+      </div>
+      <button class="jungle-button primary ok-button" id="instructionsOk" type="button">OK</button>
+    </section>
+
+    <section class="modal result-modal" id="resultModal" role="dialog" aria-modal="true" aria-labelledby="resultTitle" hidden>
+      <div class="monkey-portrait result" id="resultMonkey" aria-hidden="true"></div>
+      <p class="eyebrow" id="resultEyebrow">AMAZING WORK!</p>
+      <h2 id="resultTitle">You won!</h2>
+      <p id="resultMessage">Your jungle word power is growing!</p>
+      <div class="score-card" id="scoreCard">
+        <div><span>Moves</span><strong id="finalMoves">0</strong></div>
+        <div><span>Mistakes</span><strong id="finalMistakes">0</strong></div>
+        <div class="total"><span>Score</span><strong id="finalScore">0</strong></div>
+      </div>
+      <div class="modal-actions">
+        <button class="jungle-button primary" id="againButton" type="button">Play again</button>
+        <button class="jungle-button secondary" id="exitButton" type="button">Exit game</button>
+      </div>
+    </section>
+
+    <section class="modal exit-modal" id="exitModal" role="dialog" aria-modal="true" aria-labelledby="exitTitle" hidden>
+      <div class="monkey-portrait welcome" aria-hidden="true"></div>
+      <h2 id="exitTitle">Thanks for playing!</h2>
+      <p>Come back soon for another jungle word adventure.</p>
+      <button class="jungle-button primary" id="returnButton" type="button">Back to start</button>
+    </section>
+  </div>
+
+  <div class="celebration" id="celebration" aria-hidden="true"></div>
+  <script src="game.js"></script>
+</body>
+</html>

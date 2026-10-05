@@ -1,0 +1,21 @@
+.monkey-portrait {
+  background-size: 400px auto;
+  background-position: -85px -38px;
+}
+
+.monkey-portrait.teacher {
+  background-size: 340px auto;
+  background-position: -73px -34px;
+}
+
+.modal {
+  min-width: 0;
+  max-width: calc(100vw - 28px);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 580px) {
+  .modal-layer { padding: 14px; }
+  .modal-actions { min-width: 0; }
+  .modal-actions .jungle-button { min-width: 0; }
+}
